@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<br/>
+<br/>
+<br/>
+<br/>
+<div class='container'>
+    <div class="text-center">
+        <h1 style="color: #ffa31a;">Pustak</h1>
+        <br/>
+        <br/>
+        <h2 style="color: aliceblue;">Find an ebook</h2>
+        <br/>
+
+    <form method="POST">
+
+        {{ form.hidden_tag() }}
+        <label for="book_link" style="color: aliceblue;">Enter a book title or paste an Amazon or Flipkart link:</label>
+        {{ form.book_link(class="form-control") }}
+        <br/>
+        {{ form.submit(class="btn btn-outline-warning") }}
+
+    </form>
+    </div>
+</div>
+
+{% endblock %}
