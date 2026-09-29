@@ -19,6 +19,15 @@
         {{ form.hidden_tag() }}
         <label for="book_link" style="color: aliceblue;">Enter a book title or paste an Amazon or Flipkart link:</label>
         {{ form.book_link(class="form-control") }}
+        {% for error in form.book_link.errors %}
+        <p style="color: #ffa31a;">{{ error }}</p>
+        {% endfor %}
+        <br/>
+        <label for="author" style="color: aliceblue;">Author (optional, or search by author alone):</label>
+        {{ form.author(class="form-control") }}
+        <br/>
+        <label for="file_format" style="color: aliceblue;">Format:</label>
+        {{ form.file_format(class="form-control") }}
         <br/>
         {{ form.submit(class="btn btn-outline-warning") }}
 

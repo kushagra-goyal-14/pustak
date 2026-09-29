@@ -2,7 +2,13 @@ from libgen_api import LibgenSearch
 import requests
 from bs4 import BeautifulSoup
 
-def download(URL):
+def download(URL, file_format="pdf", author=""):
+
+    URL, author = URL.strip(), author.strip()
+    if file_format not in ("pdf", "epub"):
+        raise ValueError("Choose PDF or EPUB.")
+    if not URL and not author:
+        raise ValueError("Enter a title or author.")
 
     # Read the book title fronm amazon.
 
@@ -43,12 +49,17 @@ def download(URL):
 
     library = LibgenSearch()
 
-    filters = {"Extension": "pdf"}   # Limit results to PDF files.
+    filters = {"Extension": file_format}
 
-    results = library.search_title_filtered(title,filters)
+    if title:
+        if author:
+            filters["Author"] = author
+        results = library.search_title_filtered(title, filters, exact_match=False)
+    else:
+        results = library.search_author_filtered(author, filters, exact_match=False)
 
     if not results:
-        raise ValueError("No matching PDF found.")
+        raise ValueError("No matching ebook found.")
 
     item_to_download = results[0]
 

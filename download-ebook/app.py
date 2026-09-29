@@ -1,7 +1,6 @@
 from flask import Flask,render_template,redirect
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms import StringField, SubmitField, SelectField
 
 from downloader import download
 
@@ -11,7 +10,9 @@ app.config['SECRET_KEY'] = "YOUR_KEY"     # Replace this value before deployment
 # Accept a book title or a supported store link.
 class book_form(FlaskForm):
 
-    book_link = StringField("Book title or link", validators=[DataRequired()])
+    book_link = StringField("Book title or link")
+    author = StringField("Author (optional)")
+    file_format = SelectField("Format", choices=[("pdf", "PDF"), ("epub", "EPUB")], default="pdf")
     submit = SubmitField("Find ebook")
 
 book_link = None
@@ -26,9 +27,14 @@ def download_ebook():
 
         book_link = form.book_link.data.strip()   # Ignore leading and trailing spaces.
 
+        author = form.author.data.strip()
+        if not book_link and not author:
+            form.book_link.errors.append("Enter a book title, link, or author.")
+            return render_template("home.html", form=form)
+
         try:
 
-            download_link = download(book_link)          # Resolve the title to a download link.
+            download_link = download(book_link, form.file_format.data, author)          # Resolve the title to a download link.
 
             return redirect(download_link)
 
