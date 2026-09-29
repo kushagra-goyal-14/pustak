@@ -7,6 +7,12 @@ from downloader import download
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "YOUR_KEY"     # Replace this value before deployment.
 
+# Test if the Flask app is working.
+@app.route('/hello')
+def hello():
+    return "Hello, World!"
+
+
 # Accept a book title or a supported store link.
 class book_form(FlaskForm):
 
