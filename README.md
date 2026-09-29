@@ -1,6 +1,6 @@
 # Pustak
 
-Find PDF ebook links by title or an Amazon/Flipkart link.
+A small project I worked on to download ebooks for an automation setup I built after customizing my Kindle. Finds PDF ebook links by title or an Amazon/Flipkart link.
 
 ```sh
 pip install -r requirements.txt
